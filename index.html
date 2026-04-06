@@ -4,39 +4,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A&F Di Carlo — Platform Scope</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --navy: #0A1628;
-    --blue: #1A56DB;
-    --frost: #93C5FD;
-    --muted: #64748B;
-    --white: #FFFFFF;
-    --amber: #F59E0B;
-    --green: #10B981;
-    --orange: #F97316;
-    --orange-frost: #FED7AA;
-    --border: rgba(147,197,253,0.2);
-    --border-summer: rgba(249,115,22,0.2);
+    /* Core palette — dark graphite + emerald */
+    --bg:        #0D1117;
+    --surface:   #161B22;
+    --surface2:  #1C2333;
+    --em:        #2EA043;      /* emerald green */
+    --em-frost:  #56D364;
+    --em-dim:    rgba(46,160,67,0.18);
+    --em-border: rgba(46,160,67,0.28);
+
+    /* Winter overrides */
+    --w-accent:  #58A6FF;
+    --w-frost:   #A5D6FF;
+    --w-dim:     rgba(88,166,255,0.15);
+    --w-border:  rgba(88,166,255,0.22);
+
+    /* Summer overrides */
+    --s-accent:  #F78166;
+    --s-frost:   #FFCBA4;
+    --s-dim:     rgba(247,129,102,0.12);
+    --s-border:  rgba(247,129,102,0.22);
+
+    /* ML overrides */
+    --ml-accent: #BC8CFF;
+    --ml-frost:  #D2AAFF;
+    --ml-dim:    rgba(188,140,255,0.12);
+    --ml-border: rgba(188,140,255,0.22);
+
+    --muted:     #7D8590;
+    --text:      #E6EDF3;
+    --border:    rgba(255,255,255,0.07);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
-    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
   }
 
+  /* Subtle grid overlay */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
+    background-image:
+      linear-gradient(rgba(46,160,67,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,160,67,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
     background:
-      radial-gradient(ellipse 80% 50% at 20% 0%, rgba(26,86,219,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(147,197,253,0.06) 0%, transparent 60%);
+      radial-gradient(ellipse 70% 50% at 10% 0%, rgba(46,160,67,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 100%, rgba(88,166,255,0.05) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
@@ -44,190 +76,230 @@
   .page {
     position: relative;
     z-index: 1;
-    max-width: 1400px;
+    max-width: 1420px;
     margin: 0 auto;
-    padding: 60px 40px;
+    padding: 52px 44px;
   }
 
-  /* HEADER */
+  /* ── HEADER ─────────────────────────── */
   .header {
-    margin-bottom: 36px;
+    margin-bottom: 32px;
     padding-bottom: 28px;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
   }
 
-  .pre-tag {
-    display: inline-block;
-    background: rgba(26,86,219,0.3);
-    border: 1px solid rgba(26,86,219,0.5);
-    color: var(--frost);
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--em-dim);
+    border: 1px solid var(--em-border);
+    border-radius: 6px;
+    padding: 4px 12px 4px 8px;
+    margin-bottom: 14px;
+  }
+  .logo-dot {
+    width: 8px; height: 8px;
+    background: var(--em);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.5; transform:scale(0.85); }
+  }
+  .logo-label {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 12px;
+    color: var(--em-frost);
   }
 
   h1 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 40px;
-    font-weight: 500;
+    font-size: 36px;
+    font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
     margin-bottom: 8px;
+    color: var(--text);
   }
-
-  .accent-blue { color: var(--frost); }
+  .accent { color: var(--em-frost); }
 
   .subtitle {
     color: var(--muted);
-    font-size: 16px;
-    font-weight: 300;
-    max-width: 600px;
-    line-height: 1.6;
+    font-size: 15px;
+    font-weight: 400;
+    max-width: 560px;
+    line-height: 1.65;
   }
 
-  .client-name {
-    background: rgba(255,255,255,0.04);
+  .version-badge {
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-family: 'Syne', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--frost);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
     flex-shrink: 0;
+    line-height: 1.8;
   }
+  .version-badge strong { color: var(--em-frost); font-weight: 600; }
 
-  /* TABS */
+  /* ── TABS ────────────────────────────── */
   .season-tabs {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 36px;
+    flex-wrap: wrap;
   }
 
   .tab {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 14px 32px;
-    border-radius: 10px;
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
+    gap: 9px;
+    padding: 11px 26px;
+    border-radius: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
     border: 1px solid transparent;
-    transition: all 0.2s;
+    transition: all 0.18s;
     user-select: none;
+    letter-spacing: 0.02em;
   }
 
   .tab-winter {
-    background: rgba(26,86,219,0.2);
-    border-color: rgba(26,86,219,0.4);
-    color: var(--frost);
+    background: var(--w-dim);
+    border-color: var(--w-border);
+    color: var(--w-frost);
   }
   .tab-winter.active {
-    background: rgba(26,86,219,0.4);
-    border-color: var(--frost);
+    background: rgba(88,166,255,0.25);
+    border-color: var(--w-accent);
     color: #fff;
   }
 
   .tab-summer {
-    background: rgba(249,115,22,0.12);
-    border-color: rgba(249,115,22,0.3);
-    color: var(--orange-frost);
+    background: var(--s-dim);
+    border-color: var(--s-border);
+    color: var(--s-frost);
   }
   .tab-summer.active {
-    background: rgba(249,115,22,0.3);
-    border-color: var(--orange-frost);
+    background: rgba(247,129,102,0.25);
+    border-color: var(--s-accent);
     color: #fff;
   }
 
-  /* PANELS */
+  .tab-ml {
+    background: var(--ml-dim);
+    border-color: var(--ml-border);
+    color: var(--ml-frost);
+  }
+  .tab-ml.active {
+    background: rgba(188,140,255,0.25);
+    border-color: var(--ml-accent);
+    color: #fff;
+  }
+
+  /* ── PANELS ──────────────────────────── */
   .season-panel { display: none; }
   .season-panel.active { display: block; }
 
-  /* SECTION HEADERS */
+  /* ── SECTION HEADERS ─────────────────── */
   .section-header {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 16px;
-    margin-top: 36px;
+    margin-top: 38px;
   }
   .section-header:first-of-type { margin-top: 0; }
 
   .section-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
+    width: 40px; height: 40px;
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
+    font-size: 18px;
     flex-shrink: 0;
   }
-
-  .icon-blue   { background: rgba(26,86,219,0.3);  border: 1px solid rgba(26,86,219,0.4); }
-  .icon-green  { background: rgba(16,185,129,0.2);  border: 1px solid rgba(16,185,129,0.3); }
-  .icon-amber  { background: rgba(245,158,11,0.2);  border: 1px solid rgba(245,158,11,0.3); }
-  .icon-orange { background: rgba(249,115,22,0.2);  border: 1px solid rgba(249,115,22,0.35); }
+  .icon-blue   { background: var(--w-dim);  border: 1px solid var(--w-border); }
+  .icon-green  { background: rgba(86,211,100,0.12); border: 1px solid rgba(86,211,100,0.25); }
+  .icon-amber  { background: rgba(210,168,55,0.12); border: 1px solid rgba(210,168,55,0.22); }
+  .icon-orange { background: var(--s-dim);  border: 1px solid var(--s-border); }
+  .icon-purple { background: var(--ml-dim); border: 1px solid var(--ml-border); }
 
   .section-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
   }
-
   .section-desc {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
     margin-left: auto;
     font-style: italic;
   }
 
-  /* FEATURE GRIDS */
+  /* ── FEATURE GRIDS ───────────────────── */
   .features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 11px;
-    margin-bottom: 8px;
+    gap: 10px;
+    margin-bottom: 6px;
   }
   .features-2col { grid-template-columns: repeat(2, 1fr); }
 
   .feature {
-    background: rgba(255,255,255,0.03);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     padding: 20px;
-    transition: border-color 0.2s;
+    transition: border-color 0.18s, background 0.18s;
   }
-  .feature:hover { border-color: rgba(147,197,253,0.4); }
-  .feature.s { border-color: var(--border-summer); }
-  .feature.s:hover { border-color: rgba(249,115,22,0.5); }
+  .feature:hover { background: var(--surface2); }
+
+  .feature.w { border-color: var(--w-border); }
+  .feature.w:hover { border-color: var(--w-accent); }
+
+  .feature.s { border-color: var(--s-border); }
+  .feature.s:hover { border-color: var(--s-accent); }
+
+  .feature.ml { border-color: var(--ml-border); }
+  .feature.ml:hover { border-color: var(--ml-accent); }
 
   .feature-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 9px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .dot { width:8px; height:8px; border-radius:50%; background:var(--frost); flex-shrink:0; }
-  .dg  { background: var(--green)  !important; }
-  .da  { background: var(--amber)  !important; }
-  .do  { background: var(--orange) !important; }
+  .dot  { width:7px; height:7px; border-radius:50%; background:var(--w-accent); flex-shrink:0; }
+  .dg   { background: var(--em-frost) !important; }
+  .da   { background: #E3B341 !important; }
+  .do   { background: var(--s-accent) !important; }
+  .dp   { background: var(--ml-accent) !important; }
 
   .feature-body {
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--muted);
-    line-height: 1.7;
+    line-height: 1.72;
   }
 
-  /* PIPELINE */
+  /* ── PIPELINE ────────────────────────── */
   .pipeline {
     display: flex;
     align-items: stretch;
@@ -238,102 +310,297 @@
 
   .pipe-step {
     flex: 1;
-    min-width: 180px;
-    background: rgba(249,115,22,0.07);
-    border: 1px solid rgba(249,115,22,0.22);
+    min-width: 170px;
+    background: var(--s-dim);
+    border: 1px solid var(--s-border);
     padding: 18px 16px;
     position: relative;
     text-align: center;
   }
-  .pipe-step:first-child { border-radius: 10px 0 0 10px; }
-  .pipe-step:last-child  { border-radius: 0 10px 10px 0; }
+  .pipe-step:first-child { border-radius: 8px 0 0 8px; }
+  .pipe-step:last-child  { border-radius: 0 8px 8px 0; }
 
   .pipe-step::after {
     content: '→';
     position: absolute;
-    right: -13px; top: 50%;
+    right: -12px; top: 50%;
     transform: translateY(-50%);
-    color: var(--orange);
-    font-size: 13px;
+    color: var(--s-accent);
+    font-size: 14px;
     z-index: 2;
-    background: var(--navy);
+    background: var(--bg);
     padding: 0 2px;
   }
   .pipe-step:last-child::after { display: none; }
 
-  .pipe-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 11px; font-weight: 800;
-    color: var(--orange);
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-  }
-  .pipe-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: var(--white);
-    margin-bottom: 6px;
-  }
-  .pipe-body {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
+  .pipe-num  { font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700; color:var(--s-accent); letter-spacing:0.1em; margin-bottom:5px; }
+  .pipe-title{ font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700; color:var(--text); margin-bottom:5px; }
+  .pipe-body { font-size:12px; color:var(--muted); line-height:1.6; }
 
-  .pipe-step.replaced {
-    background: rgba(239,68,68,0.07);
-    border-color: rgba(239,68,68,0.22);
-  }
+  .pipe-step.replaced { background: rgba(248,81,73,0.07); border-color: rgba(248,81,73,0.22); }
   .rbadge {
     position: absolute; top: 6px; right: 6px;
-    background: rgba(239,68,68,0.3);
-    border: 1px solid rgba(239,68,68,0.5);
-    color: #FCA5A5;
+    background: rgba(248,81,73,0.25);
+    border: 1px solid rgba(248,81,73,0.4);
+    color: #FFA198;
     font-size: 8px; font-weight: 700;
     padding: 1px 5px; border-radius: 3px;
-    font-family: 'Syne', sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     letter-spacing: 0.05em;
   }
 
-  /* INTEGRATIONS */
+  /* ML-specific pipeline */
+  .ml-pipeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 10px;
+    overflow-x: auto;
+  }
+  .ml-pipe-step {
+    flex: 1;
+    min-width: 160px;
+    background: var(--ml-dim);
+    border: 1px solid var(--ml-border);
+    padding: 16px 14px;
+    position: relative;
+    text-align: center;
+  }
+  .ml-pipe-step:first-child { border-radius: 8px 0 0 8px; }
+  .ml-pipe-step:last-child  { border-radius: 0 8px 8px 0; }
+  .ml-pipe-step::after {
+    content: '→';
+    position: absolute;
+    right: -12px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--ml-accent);
+    font-size: 14px;
+    z-index: 2;
+    background: var(--bg);
+    padding: 0 2px;
+  }
+  .ml-pipe-step:last-child::after { display: none; }
+  .ml-pipe-num   { font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:700; color:var(--ml-accent); letter-spacing:0.1em; margin-bottom:5px; }
+  .ml-pipe-title { font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:700; color:var(--text); margin-bottom:5px; }
+  .ml-pipe-body  { font-size:11.5px; color:var(--muted); line-height:1.6; }
+
+  /* ── DATA LAKE DIAGRAM ───────────────── */
+  .lake-diagram {
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr 2px 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: 10px;
+  }
+  .lake-col {
+    background: var(--surface);
+    border: 1px solid var(--ml-border);
+    border-radius: 10px;
+    padding: 20px 18px;
+  }
+  .lake-sep {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ml-accent);
+    font-size: 18px;
+    padding: 0 8px;
+  }
+  .lake-col-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ml-frost);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--ml-border);
+  }
+  .lake-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .lake-item-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ml-accent);
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  /* ── PREDICTOR WIDGET ────────────────── */
+  .predictor-card {
+    background: var(--surface);
+    border: 1px solid var(--ml-border);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin-bottom: 10px;
+  }
+  .predictor-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ml-frost);
+    margin-bottom: 4px;
+  }
+  .predictor-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 22px;
+  }
+  .predictor-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .p-field label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .p-field select, .p-field input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--ml-border);
+    border-radius: 6px;
+    padding: 9px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    -webkit-appearance: none;
+  }
+  .p-field select:focus, .p-field input:focus { border-color: var(--ml-accent); }
+
+  .predict-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(188,140,255,0.2);
+    border: 1px solid var(--ml-accent);
+    color: var(--ml-frost);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 11px 24px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.18s;
+    letter-spacing: 0.04em;
+  }
+  .predict-btn:hover { background: rgba(188,140,255,0.35); }
+
+  .prediction-result {
+    display: none;
+    margin-top: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--ml-border);
+    border-radius: 8px;
+    padding: 18px 22px;
+  }
+  .prediction-result.visible { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .pred-main {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ml-frost);
+  }
+  .pred-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .pred-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+  .pred-meta-item {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .pred-meta-value { font-size: 16px; color: var(--text); font-weight: 600; display: block; margin-bottom: 2px; }
+
+  .pred-confidence {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    width: 100%;
+  }
+  .conf-bar-track {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .conf-bar-fill {
+    height: 100%;
+    background: var(--ml-accent);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+    width: 0%;
+  }
+  .conf-label { font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; white-space: nowrap; }
+
+  /* ── INTEGRATIONS ────────────────────── */
   .integrations {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 11px;
+    gap: 10px;
   }
   .integrations-3col { grid-template-columns: repeat(3, 1fr); }
 
   .integration {
-    background: rgba(255,255,255,0.03);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
+    border-radius: 10px;
+    padding: 18px 18px;
     text-align: center;
+    transition: border-color 0.18s;
   }
-  .integration.s { border-color: var(--border-summer); }
+  .integration.w:hover { border-color: var(--w-accent); }
+  .integration.s { border-color: var(--s-border); }
+  .integration.s:hover { border-color: var(--s-accent); }
+  .integration.ml { border-color: var(--ml-border); }
+  .integration.ml:hover { border-color: var(--ml-accent); }
 
-  .integration-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 14px; font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .integration-desc {
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
+  .integration-name { font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:700; margin-bottom:6px; }
+  .integration-desc { font-size:12px; color:var(--muted); line-height:1.6; }
 
-  /* DIVIDER */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
-  .ds { border-top-color: var(--border-summer); }
+  /* ── DIVIDERS ────────────────────────── */
+  .divider   { border:none; border-top:1px solid var(--border); margin:28px 0; }
+  .dw        { border-top-color: var(--w-border); }
+  .ds        { border-top-color: var(--s-border); }
+  .dml       { border-top-color: var(--ml-border); }
 
-  /* FOOTER */
+  /* ── FOOTER ──────────────────────────── */
   .footer {
     margin-top: 44px;
-    padding-top: 18px;
+    padding-top: 16px;
     border-top: 1px solid var(--border);
-    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
     color: var(--muted);
+    letter-spacing: 0.06em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 </style>
 </head>
@@ -343,8 +610,16 @@
   <!-- HEADER -->
   <div class="header">
     <div>
-      <h1>A&amp;F Di Carlo Constructions<span class="accent-blue"> — Scope Document</span></h1>
-      <p class="subtitle">A unified web + mobile operations platform for A&F Di Carlo Construction — covering both winter activities and summer activities.</p>
+      <div class="logo-mark">
+        <div class="logo-dot"></div>
+        <span class="logo-label">Unified Ops Platform</span>
+      </div>
+      <h1>A&amp;F Di Carlo Constructions <span class="accent">— Scope</span></h1>
+      <p class="subtitle">A unified web + mobile operations platform covering winter activities, summer excavation operations, and an ML intelligence layer for route optimisation.</p>
+    </div>
+    <div class="version-badge">
+      <strong>v1.0</strong> — Scope Document<br>
+      Winter &nbsp;/ &nbsp;Summer &nbsp;/ &nbsp;ML
     </div>
   </div>
 
@@ -352,6 +627,7 @@
   <div class="season-tabs">
     <div class="tab tab-winter active" onclick="switchTab('winter')">❄️ &nbsp;Winter Operations</div>
     <div class="tab tab-summer" onclick="switchTab('summer')">☀️ &nbsp;Summer Operations</div>
+    <div class="tab tab-ml" onclick="switchTab('ml')">🧠 &nbsp;ML Scope</div>
   </div>
 
 
@@ -365,47 +641,48 @@
     </div>
 
     <div class="features">
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot"></span>Work Order Ingestion</div>
         <div class="feature-body">An AWS SES email listener monitors the dispatch inbox continuously. The moment a Maximo work order email arrives from the City of Toronto, the AI parsing engine extracts every relevant field — Work Order ID, activity type, infrastructure, start time, location, and contract — and creates the work order record instantly. Zero manual entry, zero delay.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot"></span>Work Order List &amp; Detail</div>
         <div class="feature-body">Filterable list by status, contract, activity, and date. Detail view shows full event timeline, assigned crew, field photos, route coverage map, and complete audit log.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot"></span>Deadline Auto-Calculation</div>
         <div class="feature-body">VBA spreadsheet business rules encoded into the system once. Call-out time, activation deadline, and MOT deadline calculated automatically from activity + infrastructure type. Live colour-coded countdown timers on every active work order.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot"></span>Crew &amp; Vehicle Assignment</div>
         <div class="feature-body">Dispatcher assigns operators and vehicles from a live availability panel. Assignment pushes instantly to operator's mobile app. Replaces manual Activity Messenger broadcasts entirely.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot"></span>Vehicle Status Board</div>
         <div class="feature-body">Live board — all 80 vehicles showing In Yard, Deployed, Returning, or Out of Service. Departure and return times auto-logged from Geotab geofence events. No more physical gate-watching.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot"></span>Penalty Risk Calculator</div>
         <div class="feature-body">If vehicles haven't departed by projected time, the system shows live estimated penalty exposure in dollars. Dispatcher sees the financial consequence before it happens — not after.</div>
       </div>
     </div>
 
-    <div class="features" style="margin-top:11px;">
-      <div class="feature">
+    <div class="features" style="margin-top:10px;">
+      <div class="feature w">
         <div class="feature-title"><span class="dot dg"></span>Live Fleet Map</div>
         <div class="feature-body">Real-time GPS from Geotab API. GPS tracks drawn as route coverage — completed segments green, pending grey. Bus stop pins update live as operators submit photos from the field.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot dg"></span>Maximo Auto-Submission</div>
         <div class="feature-body">On work order close, the system compiles the full Maximo record automatically — vehicle, times, hours, salt used, notes. Dispatcher reviews, approves, and it posts via API. No manual web entry.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot dg"></span>End of Shift Auto-Report</div>
         <div class="feature-body">Shift handover report auto-generated from captured data — active work orders, vehicle statuses, flags, pending items. Incoming dispatcher fully briefed the moment they open the app.</div>
       </div>
     </div>
-    <hr class="divider">
+
+    <hr class="divider dw">
 
     <div class="section-header">
       <div class="section-icon icon-green">📱</div>
@@ -414,33 +691,33 @@
     </div>
 
     <div class="features">
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot dg"></span>Availability Confirmation</div>
         <div class="feature-body">Pre-event push notification to all operators. They confirm Available / Unavailable / Delayed in the app. Live headcount flows to dispatcher dashboard instantly — replaces manual Activity Messenger.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot dg"></span>Work Order Notification</div>
         <div class="feature-body">When assigned, operator gets a push notification with activity type, report time, activation deadline, and route details. One tap opens the full work order in the app.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot dg"></span>Digital Route Map</div>
         <div class="feature-body">Assigned route on interactive map. GPS shown live. Completed segments turn green. Replaces paper maps entirely. Dynamic reassignments appear instantly — no phone call needed.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot da"></span>Photo Capture — Bus Stops</div>
         <div class="feature-body">Structured before/after photo workflow. GPS and timestamp embedded automatically at capture. Photos trigger CV classification and update the dispatcher's map in real time.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot da"></span>Salt Load Logging</div>
         <div class="feature-body">Operator logs each salt load — quantity and location. Feeds into work order record and Maximo submission automatically. Replaces current guesstimates with actual usage data.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot da"></span>Field Notes &amp; Incidents</div>
         <div class="feature-body">Route blockages, breakdowns, or condition notes entered in the app appear on dispatcher's dashboard instantly. Breakdowns auto-flag a potential MOT extension to the supervisor.</div>
       </div>
     </div>
 
-    <hr class="divider">
+    <hr class="divider dw">
 
     <div class="section-header">
       <div class="section-icon icon-amber">🤖</div>
@@ -449,21 +726,21 @@
     </div>
 
     <div class="features">
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot da"></span>AWS SES — Maximo Email Parser</div>
         <div class="feature-body">A dedicated AWS SES listener sits on the dispatch inbox. Every incoming Maximo work order email is captured automatically and passed to an LLM-based extraction engine. The AI parses the email content and outputs structured data — Work Order ID, activity type, infrastructure type, target start time, location, and contract number. No human reads or transcribes the email. The parsed record is immediately available in the dashboard for deadline calculation and crew assignment.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot da"></span>Bus Stop CV Verification</div>
         <div class="feature-body">Before/after photo pairs auto-classified — Cleared, Partially Cleared, Obstructed, No Change. Result attached to work order as AI-generated verification. Disputes produce an instant evidence package: GPS, timestamp, CV classification.</div>
       </div>
-      <div class="feature">
+      <div class="feature w">
         <div class="feature-title"><span class="dot da"></span>Dashcam Footage Store</div>
         <div class="feature-body">SD cards from 80 vehicles batch-uploaded via a multi-slot station at the yard overnight. Each clip vectorised on ingestion — vehicle ID, timestamp, GPS, scene tags (weather, road condition, time of day), and event flags (braking, obstruction, pedestrian) stored as searchable metadata. Any clip retrieved instantly by vehicle, date, time, or location — no manual scrubbing ever.</div>
       </div>
     </div>
 
-    <hr class="divider">
+    <hr class="divider dw">
 
     <div class="section-header">
       <div class="section-icon icon-blue">🔗</div>
@@ -472,19 +749,19 @@
     </div>
 
     <div class="integrations">
-      <div class="integration">
+      <div class="integration w">
         <div class="integration-name">Maximo</div>
         <div class="integration-desc">Inbound work order emails parsed. Completed records posted via API. 311 service requests pulled as work flags.</div>
       </div>
-      <div class="integration">
+      <div class="integration w">
         <div class="integration-name">Geotab</div>
         <div class="integration-desc">Geofence departure/return auto-logged. Live vehicle GPS for fleet map. Route tracks stored per work order.</div>
       </div>
-      <div class="integration">
+      <div class="integration w">
         <div class="integration-name">Activity Messenger</div>
         <div class="integration-desc">Pre-event notifications migrated to mobile push. Activity Messenger retained as fallback only.</div>
       </div>
-      <div class="integration">
+      <div class="integration w">
         <div class="integration-name">Environment Canada</div>
         <div class="integration-desc">Weather and snowfall data pulled automatically. Logged per event for analysis and model training.</div>
       </div>
@@ -496,7 +773,6 @@
   <!-- ═══════════════ SUMMER ═══════════════ -->
   <div class="season-panel" id="panel-summer">
 
-    <!-- Current Process -->
     <div class="section-header">
       <div class="section-icon icon-orange">🔄</div>
       <div class="section-title">Current Process — How It Works Today</div>
@@ -534,7 +810,6 @@
 
     <hr class="divider ds">
 
-    <!-- Component 1 Summer -->
     <div class="section-header">
       <div class="section-icon icon-orange">📡</div>
       <div class="section-title">Component 1 — Locate &amp; Permit Management</div>
@@ -570,7 +845,6 @@
 
     <hr class="divider ds">
 
-    <!-- Component 2 Summer -->
     <div class="section-header">
       <div class="section-icon icon-orange">📋</div>
       <div class="section-title">Component 2 — Work Order Management</div>
@@ -606,7 +880,6 @@
 
     <hr class="divider ds">
 
-    <!-- Component 3 Summer Mobile -->
     <div class="section-header">
       <div class="section-icon icon-green">📱</div>
       <div class="section-title">Component 3 — Mobile Application</div>
@@ -642,7 +915,6 @@
 
     <hr class="divider ds">
 
-    <!-- Component 4 Summer -->
     <div class="section-header">
       <div class="section-icon icon-orange">🔗</div>
       <div class="section-title">Component 4 — Integration Layer</div>
@@ -667,9 +939,224 @@
   </div><!-- /summer -->
 
 
+  <!-- ═══════════════ ML SCOPE ═══════════════ -->
+  <div class="season-panel" id="panel-ml">
+
+    <!-- Section 1: Data Lake -->
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗄️</div>
+      <div class="section-title">Component 1 — Data Lake Architecture</div>
+      <div class="section-desc">Built from live truck navigation &amp; operational telemetry</div>
+    </div>
+
+    <div class="lake-diagram">
+      <div class="lake-col">
+        <div class="lake-col-title">📥 &nbsp;Raw Ingestion Layer</div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Geotab GPS telemetry — per-second position, speed, heading for all 80 vehicles</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Geofence events — yard departure, yard return, stop dwell times</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Salt load logs — quantity, time, GPS location from mobile app</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Bus stop photo metadata — GPS, timestamp, CV classification result</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Dashcam clip metadata — vehicle, timestamp, scene/event tags</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Environment Canada — hourly snowfall, temperature, wind, precipitation</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Work order records — activity type, infrastructure, MOT window, crew</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Field incident logs — route blockages, breakdowns, notes with timestamps</div></div>
+      </div>
+
+      <div class="lake-sep">→</div>
+
+      <div class="lake-col">
+        <div class="lake-col-title">⚙️ &nbsp;Transform &amp; Feature Store</div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>GPS tracks snapped to road network — per-segment speed profiles built per vehicle per event</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Asset completion time extracted — route start to last bus stop photo per work order</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Snow accumulation at time of dispatch computed from weather time-series</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Vehicle class labels derived — plow type, spreader type, truck capacity</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Activity type one-hot encoded — plowing, salting, sanding, mixed</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Infrastructure type encoded — major arterial, bus route, laneway, bike path</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Delay flags — breakdown events, road blockages, salt refill stops joined to route</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Penalty outcome labels — on-time, near-miss, breached per MOT window</div></div>
+      </div>
+
+      <div class="lake-sep">→</div>
+
+      <div class="lake-col">
+        <div class="lake-col-title">📊 &nbsp;Analytics &amp; Model-Ready Layer</div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Labelled training dataset — one row per work order with all features and outcome</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Segment speed lookup table — average speed per road segment by condition &amp; vehicle type</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Historical route completion benchmarks by asset, activity, and weather band</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Salt consumption curves — kg per km by temperature band and road type</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Driver performance profiles — average speed adherence, stop efficiency</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Fleet availability time-series — vehicle utilisation and idle patterns by event</div></div>
+        <div class="lake-item"><div class="lake-item-dot"></div><div>Route graph — nodes (bus stops, intersections) + weighted edges (time, distance)</div></div>
+      </div>
+    </div>
+
+    <hr class="divider dml">
+
+    <!-- Section 2: ML Pipeline -->
+    <div class="section-header">
+      <div class="section-icon icon-purple">⚗️</div>
+      <div class="section-title">Component 2 — ML Training Pipeline</div>
+      <div class="section-desc">From raw data to production models</div>
+    </div>
+
+    <div class="ml-pipeline">
+      <div class="ml-pipe-step">
+        <div class="ml-pipe-num">STAGE 1</div>
+        <div class="ml-pipe-title">Data Collection</div>
+        <div class="ml-pipe-body">Geotab GPS, work order records, weather, salt logs, and photo metadata streamed into AWS S3 data lake as Parquet files partitioned by date and vehicle.</div>
+      </div>
+      <div class="ml-pipe-step">
+        <div class="ml-pipe-num">STAGE 2</div>
+        <div class="ml-pipe-title">Feature Engineering</div>
+        <div class="ml-pipe-body">AWS Glue ETL jobs transform raw telemetry into structured features — route segments, snow depth at dispatch, vehicle class, asset type, activity, historical speed.</div>
+      </div>
+      <div class="ml-pipe-step">
+        <div class="ml-pipe-num">STAGE 3</div>
+        <div class="ml-pipe-title">Model Training</div>
+        <div class="ml-pipe-body">Gradient Boosted Tree (XGBoost) trained on labelled work order outcomes. Target: completion time per asset. Re-trained after each season with new actuals appended.</div>
+      </div>
+      <div class="ml-pipe-step">
+        <div class="ml-pipe-num">STAGE 4</div>
+        <div class="ml-pipe-title">Validation</div>
+        <div class="ml-pipe-body">Held-out test set from prior season events. RMSE and MAPE metrics evaluated. Feature importance report generated. Prediction intervals computed per asset type.</div>
+      </div>
+      <div class="ml-pipe-step">
+        <div class="ml-pipe-num">STAGE 5</div>
+        <div class="ml-pipe-title">Deployment</div>
+        <div class="ml-pipe-body">Model serialised and served via AWS SageMaker endpoint. Dashboard and mobile app call the endpoint at dispatch time. Route optimiser calls it to cost each candidate route.</div>
+      </div>
+      <div class="ml-pipe-step">
+        <div class="ml-pipe-num">STAGE 6</div>
+        <div class="ml-pipe-title">Monitoring</div>
+        <div class="ml-pipe-body">Predicted vs actual times logged per work order. Drift detection triggers re-training flag when MAPE exceeds threshold over a rolling 30-day window.</div>
+      </div>
+    </div>
+
+    <hr class="divider dml">
+
+    <!-- Section 3: Completion Time Predictor -->
+    <div class="section-header">
+      <div class="section-icon icon-purple">⏱️</div>
+      <div class="section-title">Component 3 — Asset Completion Time Predictor</div>
+      <div class="section-desc">Interactive model interface — enter conditions, get predicted duration</div>
+    </div>
+
+    <div class="predictor-card">
+      <div class="predictor-title">// completion_time_predictor.model</div>
+      <div class="predictor-subtitle">Enter current conditions to predict how long a vehicle will take to fully service the selected asset</div>
+
+      <div class="predictor-grid">
+        <div class="p-field">
+          <label>Snow Depth (cm)</label>
+          <input type="number" id="pred-snow" placeholder="e.g. 12" min="0" max="60" value="8">
+        </div>
+        <div class="p-field">
+          <label>Precipitation Type</label>
+          <select id="pred-precip">
+            <option value="snow">Snow</option>
+            <option value="freezing_rain">Freezing Rain</option>
+            <option value="sleet">Sleet</option>
+            <option value="mixed">Mixed</option>
+            <option value="none">None / Dry</option>
+          </select>
+        </div>
+        <div class="p-field">
+          <label>Asset Type</label>
+          <select id="pred-asset">
+            <option value="bus_route_major">Bus Route — Major Arterial</option>
+            <option value="bus_route_minor">Bus Route — Minor Street</option>
+            <option value="bus_stop">Bus Stops (standalone)</option>
+            <option value="bike_path">Bike Path</option>
+            <option value="laneway">Laneway</option>
+          </select>
+        </div>
+        <div class="p-field">
+          <label>Vehicle Type</label>
+          <select id="pred-vehicle">
+            <option value="heavy_plow_spreader">Heavy Plow + Spreader</option>
+            <option value="medium_plow">Medium Plow</option>
+            <option value="sidewalk_machine">Sidewalk Machine</option>
+            <option value="salt_truck">Salt Truck Only</option>
+            <option value="light_duty">Light Duty</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="predict-btn" onclick="runPrediction()">
+        ▶ &nbsp;Run Prediction
+      </button>
+
+      <div class="prediction-result" id="pred-result">
+        <div>
+          <div class="pred-main" id="pred-time">—</div>
+          <div class="pred-label">Estimated completion time</div>
+        </div>
+        <div class="pred-meta">
+          <div class="pred-meta-item">
+            <span class="pred-meta-value" id="pred-low">—</span>
+            Lower bound (P10)
+          </div>
+          <div class="pred-meta-item">
+            <span class="pred-meta-value" id="pred-high">—</span>
+            Upper bound (P90)
+          </div>
+          <div class="pred-meta-item">
+            <span class="pred-meta-value" id="pred-penalty">—</span>
+            MOT Risk
+          </div>
+        </div>
+        <div class="pred-confidence">
+          <span class="conf-label">Model confidence</span>
+          <div class="conf-bar-track"><div class="conf-bar-fill" id="conf-bar"></div></div>
+          <span class="conf-label" id="conf-pct">—</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider dml">
+
+    <!-- Section 4: Route Optimisation -->
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗺️</div>
+      <div class="section-title">Component 4 — Route Optimisation Algorithm</div>
+      <div class="section-desc">Data lake + predictor as the cost function backbone</div>
+    </div>
+
+    <div class="features features-2col">
+      <div class="feature ml">
+        <div class="feature-title"><span class="dot dp"></span>Graph Construction from Data Lake</div>
+        <div class="feature-body">The road network is represented as a weighted directed graph. Nodes are bus stops, intersections, and depot. Edge weights are not static distances — they are <em>predicted service times</em> from the ML model, dynamically computed at dispatch time using current snow depth, precipitation type, and vehicle type. The graph is rebuilt fresh for every event.</div>
+      </div>
+      <div class="feature ml">
+        <div class="feature-title"><span class="dot dp"></span>Constraint-Aware Optimisation</div>
+        <div class="feature-body">The optimiser runs a Vehicle Routing Problem solver (OR-Tools) over the graph with hard constraints from the contract — MOT deadline per activity, vehicle capacity, crew availability, active work orders, and salt load range. It produces the minimum-time, penalty-safe assignment of vehicles to route segments.</div>
+      </div>
+      <div class="feature ml">
+        <div class="feature-title"><span class="dot dp"></span>Multi-Vehicle Fleet Assignment</div>
+        <div class="feature-body">When multiple vehicles are available, the algorithm partitions the asset network across the fleet to minimise the latest completion time — not just average. This directly attacks the worst-case MOT breach scenario. Suggested vehicle-to-route assignments are presented to the dispatcher as a one-click deployment plan.</div>
+      </div>
+      <div class="feature ml">
+        <div class="feature-title"><span class="dot dp"></span>Live Re-Optimisation</div>
+        <div class="feature-body">When a vehicle breaks down, a road is blocked, or a new work order arrives mid-event, the optimiser re-runs automatically in under 3 seconds. The updated route suggestions are pushed to the affected operator's mobile app without dispatcher intervention.</div>
+      </div>
+      <div class="feature ml">
+        <div class="feature-title"><span class="dot dp"></span>What-If Scenario Modelling</div>
+        <div class="feature-body">Dispatcher can simulate conditions before deployment — enter expected snow depth, precipitation, and available fleet count and see projected completion times and risk scores across the full asset network. Supports decisions like whether to call in standby operators before a storm peaks.</div>
+      </div>
+      <div class="feature ml">
+        <div class="feature-title"><span class="dot dp"></span>Seasonal Model Improvement Loop</div>
+        <div class="feature-body">Every completed work order feeds back into the data lake as a new labelled training example — predicted time vs actual time, conditions, vehicle type, and outcome. The model is retrained at season end. Each winter, predictions and route assignments get sharper as the fleet's historical record accumulates.</div>
+      </div>
+    </div>
+
+
+  </div><!-- /ml -->
+
+
   <!-- FOOTER -->
   <div class="footer">
-    A&F Di Carlo Construction — Unified Operations Platform Scope v1.0 &nbsp;|&nbsp; Winter & Summer Activities 
+    <span>A&F DI CARLO CONSTRUCTION — UNIFIED OPERATIONS PLATFORM</span>
+    <span>SCOPE v1.0 &nbsp;·&nbsp; WINTER / SUMMER / ML</span>
   </div>
 
 </div>
@@ -680,6 +1167,58 @@
     document.querySelectorAll('.season-panel').forEach(p => p.classList.remove('active'));
     document.querySelector('.tab-' + season).classList.add('active');
     document.getElementById('panel-' + season).classList.add('active');
+  }
+
+  function runPrediction() {
+    const snow     = parseFloat(document.getElementById('pred-snow').value) || 8;
+    const precip   = document.getElementById('pred-precip').value;
+    const asset    = document.getElementById('pred-asset').value;
+    const vehicle  = document.getElementById('pred-vehicle').value;
+
+    // Simulated model logic (representative heuristic)
+    let base = 120; // minutes
+
+    // Snow depth factor
+    base += snow * 3.2;
+
+    // Precipitation type
+    const precipMult = { snow: 1.0, freezing_rain: 1.35, sleet: 1.2, mixed: 1.15, none: 0.75 };
+    base *= (precipMult[precip] || 1.0);
+
+    // Asset type
+    const assetMult = { bus_route_major: 1.4, bus_route_minor: 1.1, bus_stop: 0.6, bike_path: 0.85, laneway: 0.7 };
+    base *= (assetMult[asset] || 1.0);
+
+    // Vehicle type
+    const vehMult = { heavy_plow_spreader: 0.8, medium_plow: 1.0, sidewalk_machine: 1.15, salt_truck: 1.05, light_duty: 1.3 };
+    base *= (vehMult[vehicle] || 1.0);
+
+    const mins   = Math.round(base);
+    const low    = Math.round(base * 0.82);
+    const high   = Math.round(base * 1.22);
+    const conf   = Math.round(Math.max(55, Math.min(94, 92 - snow * 0.4 - (precip === 'freezing_rain' ? 8 : 0))));
+
+    const hrs = m => `${Math.floor(m/60)}h ${m%60}m`;
+
+    // MOT risk
+    let risk = 'LOW'; let riskColor = '#56D364';
+    if (mins > 240) { risk = 'HIGH'; riskColor = '#F78166'; }
+    else if (mins > 180) { risk = 'MED'; riskColor = '#E3B341'; }
+
+    document.getElementById('pred-time').textContent = hrs(mins);
+    document.getElementById('pred-low').textContent  = hrs(low);
+    document.getElementById('pred-high').textContent = hrs(high);
+    document.getElementById('pred-penalty').textContent = risk;
+    document.getElementById('pred-penalty').style.color = riskColor;
+    document.getElementById('conf-pct').textContent  = conf + '%';
+
+    const result = document.getElementById('pred-result');
+    result.classList.add('visible');
+
+    // Animate confidence bar
+    setTimeout(() => {
+      document.getElementById('conf-bar').style.width = conf + '%';
+    }, 80);
   }
 </script>
 </body>
